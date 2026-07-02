@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Rodrigues Gomes — Creative for Ministry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFEAE1;
+    --paper-dim:#E4DECF;
+    --ink:#22201B;
+    --sanctuary:#33463B;
+    --sanctuary-dark:#232F29;
+    --gold:#B98A3E;
+    --red:#7A3230;
+    --line: rgba(34,32,27,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--sanctuary);
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.05;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(239,234,225,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-name{font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem;}
+  .nav-links{display:flex; gap:28px; align-items:center; font-size:0.88rem;}
+  .nav-links a{text-decoration:none; opacity:0.75; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 18px; border-radius:2px;
+    background:var(--sanctuary); color:var(--paper);
+    text-decoration:none; font-size:0.85rem; font-weight:500;
+    border:1px solid var(--sanctuary);
+    transition:background .2s, color .2s;
+  }
+  .btn:hover{background:var(--sanctuary-dark);}
+  .btn-outline{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-outline:hover{border-color:var(--ink); background:transparent;}
+
+  /* HERO */
+  header.hero{padding:96px 0 0; overflow:hidden;}
+  .hero-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:end;}
+  .hero h1{font-size:clamp(2.4rem, 5vw, 4.1rem); margin:18px 0 22px;}
+  .hero h1 em{font-style:italic; color:var(--sanctuary);}
+  .hero p.sub{font-size:1.08rem; max-width:46ch; opacity:0.82; margin-bottom:28px;}
+  .hero-actions{display:flex; gap:12px; margin-bottom:56px;}
+  .hero-meta{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    display:flex; flex-direction:column; gap:6px; opacity:0.7;
+    padding-bottom:56px; text-align:right;
+  }
+
+  /* CONTACT SHEET STRIP — signature element */
+  .contact-sheet{
+    background:var(--sanctuary-dark);
+    padding:22px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .strip{
+    display:flex; gap:2px;
+    overflow-x:auto;
+    padding:0 32px;
+    scrollbar-width:none;
+  }
+  .strip::-webkit-scrollbar{display:none;}
+  .frame{
+    position:relative;
+    flex:0 0 auto;
+    width:150px; height:100px;
+    display:flex; align-items:flex-end;
+    padding:8px;
+    filter:grayscale(0.15);
+  }
+  .frame::before{
+    content:attr(data-n);
+    position:absolute; top:6px; left:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem; color:rgba(239,234,225,0.65);
+  }
+  .frame span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.66rem; color:var(--paper);
+    background:rgba(0,0,0,0.35);
+    padding:2px 6px;
+  }
+  .f1{background:linear-gradient(135deg,#B98A3E,#7A3230);}
+  .f2{background:linear-gradient(135deg,#33463B,#22201B);}
+  .f3{background:linear-gradient(135deg,#7A3230,#33463B);}
+  .f4{background:linear-gradient(135deg,#22201B,#B98A3E);}
+  .f5{background:linear-gradient(135deg,#33463B,#B98A3E);}
+  .f6{background:linear-gradient(135deg,#7A3230,#22201B);}
+
+  section{padding:88px 0;}
+  section.tight{padding:64px 0;}
+  .section-head{margin-bottom:40px;}
+  .section-head h2{font-size:2rem; margin-top:10px;}
+  .rule{height:1px; background:var(--line); width:100%; margin:0;}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.5fr; gap:56px;}
+  .about-grid p{margin-bottom:16px; opacity:0.88; max-width:62ch;}
+  .pillars{display:flex; flex-direction:column; gap:18px;}
+  .pillar{border-left:2px solid var(--gold); padding-left:16px;}
+  .pillar h3{font-size:1.05rem; margin-bottom:4px;}
+  .pillar p{font-size:0.88rem; opacity:0.7; margin:0;}
+
+  /* WORK */
+  .work-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:2px; background:var(--line);}
+  .work-card{
+    background:var(--paper); padding:26px;
+    display:flex; flex-direction:column; gap:14px;
+    min-height:230px;
+  }
+  .work-thumb{
+    height:120px; border-radius:2px;
+  }
+  .work-card h3{font-size:1.1rem;}
+  .work-card p{font-size:0.85rem; opacity:0.72;}
+  .tag-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:auto;}
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.66rem;
+    padding:3px 8px; border:1px solid var(--line); border-radius:20px;
+    opacity:0.75;
+  }
+
+  /* SKILLS */
+  .skills-cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px;}
+  .skill-group h3{font-size:0.95rem; margin-bottom:14px; text-transform:uppercase; letter-spacing:0.04em; font-family:'IBM Plex Mono', monospace; font-weight:500;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-size:0.82rem; padding:6px 13px;
+    background:var(--paper-dim); border-radius:2px;
+  }
+
+  /* AVAILABILITY STRIP */
+  .avail{
+    background:var(--sanctuary); color:var(--paper);
+    padding:40px 0;
+  }
+  .avail .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+  .avail h3{font-family:'Fraunces', serif; font-weight:500; font-size:1.3rem;}
+  .avail p{font-size:0.85rem; opacity:0.85; max-width:44ch;}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:#8FBF9F; margin-right:8px;}
+
+  /* CONTACT */
+  .contact-wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .contact-list{display:flex; flex-direction:column; gap:14px; font-size:0.95rem;}
+  .contact-list a{text-decoration:none; border-bottom:1px solid var(--line);}
+  footer{padding:32px 0; text-align:center; font-size:0.78rem; opacity:0.55; font-family:'IBM Plex Mono', monospace;}
+
+  @media (max-width:900px) and (min-width:761px){
+    .skills-cols{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    .hero-grid, .about-grid, .contact-wrap, .skills-cols{grid-template-columns:1fr;}
+    .work-grid{grid-template-columns:1fr;}
+    .hero-meta{text-align:left; padding-bottom:32px;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">Alex Rodrigues Gomes</div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="#" class="btn">Download resume</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Vista, CA · Media &amp; Design for the church</span>
+      <h1>Telling the story your <em>congregation</em> is already living.</h1>
+      <p class="sub">I'm a theology graduate and creative director with 10+ years of experience in branding, photography, video production, and UX — I build the visual and digital presence that helps churches and ministries communicate clearly, inside and outside the walls.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn">See the work</a>
+        <a href="#contact" class="btn btn-outline">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span>Available for full-time roles</span>
+      <span>B.A. Theology — Rochester University, 2026</span>
+      <span>Founder, AG Creation Marketing</span>
+    </div>
+  </div>
+
+  <div class="contact-sheet">
+    <div class="strip">
+      <div class="frame f1" data-n="01"><span>photo</span></div>
+      <div class="frame f2" data-n="02"><span>video</span></div>
+      <div class="frame f3" data-n="03"><span>brand</span></div>
+      <div class="frame f4" data-n="04"><span>ux/web</span></div>
+      <div class="frame f5" data-n="05"><span>social</span></div>
+      <div class="frame f6" data-n="06"><span>drone</span></div>
+      <div class="frame f1" data-n="07"><span>photo</span></div>
+      <div class="frame f2" data-n="08"><span>video</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">About</span>
+      <h2>Two disciplines, one purpose.</h2>
+    </div>
+    <div>
+      <p>I've spent the last decade running AG Creation Marketing, a full-service creative agency producing branding, web design, and multimedia for clients across education, healthcare, renewable energy, construction, entertainment, and faith-based organizations in the U.S. and Brazil. In parallel, I'm finishing a Theology degree — and the two paths have converged into one focus: helping churches and ministries tell their story with the same craft a national brand would expect.</p>
+      <p>I've directed documentary-style videos, fundraising campaigns, and outreach content for churches and Christian artists, produced 80+ educational videos for corporate and workforce training, and built websites and UI/UX systems in Figma, Framer, and WordPress. I also fly FPV drone for aerial production — a skill that keeps finding its way into everything from solar-farm documentation to worship films.</p>
+      <div class="pillars" style="margin-top:28px;">
+        <div class="pillar">
+          <h3>Theological literacy</h3>
+          <p>B.A. in Theology, Rochester University (expected 2026) — I understand the message being built, not just the brief.</p>
+        </div>
+        <div class="pillar">
+          <h3>10+ years of production</h3>
+          <p>Photography, video, drone, motion graphics, and print — full ownership from concept to delivery.</p>
+        </div>
+        <div class="pillar">
+          <h3>Marketing &amp; UX systems</h3>
+          <p>Web design, UI/UX, SEO, paid media, and AI-assisted workflows behind the visuals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Selected work</span>
+      <h2>Ten years of stories, told for people who needed them told well.</h2>
+    </div>
+  </div>
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="work-thumb f1"></div>
+      <h3>Faith-Based &amp; Nonprofit Communications</h3>
+      <p>Documentary-style videos, fundraising campaigns, and outreach content for churches, Christian artists, and community organizations.</p>
+      <div class="tag-row"><span class="tag">Video</span><span class="tag">Fundraising</span></div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb f2"></div>
+      <h3>Apollo Engenharia — Construction &amp; Engineering</h3>
+      <p>30+ progress and institutional videos over a six-month engagement, translating technical work into brand storytelling.</p>
+      <div class="tag-row"><span class="tag">Drone</span><span class="tag">Corporate video</span></div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb f3"></div>
+      <h3>Continuum Solar — Renewable Energy</h3>
+      <p>20+ marketing videos and full visual documentation across 10+ commercial solar installations.</p>
+      <div class="tag-row"><span class="tag">Photography</span><span class="tag">Drone</span></div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb f4"></div>
+      <h3>Corporate &amp; Healthcare Events</h3>
+      <p>Coverage for 20+ conferences and executive programs, including Hospital Israelita Albert Einstein and Libbs.</p>
+      <div class="tag-row"><span class="tag">Events</span><span class="tag">Interviews</span></div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb f5"></div>
+      <h3>Corporate Education &amp; Training</h3>
+      <p>80+ educational videos supporting onboarding, leadership development, and workforce training.</p>
+      <div class="tag-row"><span class="tag">E-learning</span><span class="tag">Motion</span></div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb f6"></div>
+      <h3>Entertainment &amp; Tourism</h3>
+      <p>Audiovisual content for national concert tours and 50+ organized travel experiences.</p>
+      <div class="tag-row"><span class="tag">Video</span><span class="tag">Drone</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="tight">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Skills &amp; tools</span>
+      <h2>What I bring to a media team.</h2>
+    </div>
+    <div class="skills-cols">
+      <div class="skill-group">
+        <h3>Creative</h3>
+        <div class="chip-row">
+          <span class="chip">Creative direction</span>
+          <span class="chip">Photography</span>
+          <span class="chip">Videography</span>
+          <span class="chip">Video production</span>
+          <span class="chip">Motion graphics</span>
+          <span class="chip">Drone / FPV</span>
+          <span class="chip">Color grading</span>
+          <span class="chip">Branding</span>
+          <span class="chip">UI/UX design</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Marketing &amp; strategy</h3>
+        <div class="chip-row">
+          <span class="chip">Digital marketing</span>
+          <span class="chip">Content strategy</span>
+          <span class="chip">SEO fundamentals</span>
+          <span class="chip">Google &amp; Meta Ads</span>
+          <span class="chip">Email marketing</span>
+          <span class="chip">Google Analytics</span>
+          <span class="chip">AI-assisted workflows</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Tools</h3>
+        <div class="chip-row">
+          <span class="chip">Adobe Premiere Pro</span>
+          <span class="chip">After Effects</span>
+          <span class="chip">Photoshop</span>
+          <span class="chip">Illustrator</span>
+          <span class="chip">InDesign</span>
+          <span class="chip">Lightroom</span>
+          <span class="chip">Final Cut Pro</span>
+          <span class="chip">Figma</span>
+          <span class="chip">Framer</span>
+          <span class="chip">WordPress</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="avail">
+  <div class="wrap">
+    <div>
+      <h3><span class="dot"></span>Currently based in Vista, CA</h3>
+      <p>Finishing a B.A. in Theology in 2026 and seeking a media, communications, or creative director role at a church or ministry in Southern California — building on 10+ years running AG Creation Marketing.</p>
+    </div>
+    <a href="#contact" class="btn" style="background:var(--paper); color:var(--sanctuary);">Let's talk</a>
+  </div>
+</div>
+
+<section id="contact">
+  <div class="wrap contact-wrap">
+    <div>
+      <span class="eyebrow">Contact</span>
+      <h2 style="margin-top:10px;">Building a media team? <br>I'd love to help.</h2>
+    </div>
+    <div class="contact-list">
+      <a href="mailto:alexgomes.production@gmail.com">alexgomes.production@gmail.com</a>
+      <a href="tel:+19496858380">(949) 685-8380</a>
+      <a href="https://www.agcreationmkt.com">www.agcreationmkt.com</a>
+      <a href="#">linkedin.com/in/alexrodriguesgomes</a>
+      <a href="#">Portfolio PDF / resume download</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Alex Rodrigues Gomes — Vista, CA</footer>
+
+</body>
+</html>
