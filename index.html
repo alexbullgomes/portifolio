@@ -93,6 +93,8 @@
     overflow-x:auto;
     padding:0 32px;
     scrollbar-width:none;
+    justify-content:center;
+    justify-content:safe center;
   }
   .strip::-webkit-scrollbar{display:none;}
   .frame{
@@ -102,12 +104,14 @@
     display:flex; align-items:flex-end;
     padding:8px;
     filter:grayscale(0.15);
+    overflow:hidden;
   }
   .frame::before{
     content:attr(data-n);
     position:absolute; top:6px; left:8px;
     font-family:'IBM Plex Mono', monospace;
     font-size:0.62rem; color:rgba(239,234,225,0.65);
+    z-index:1;
   }
   .frame span{
     font-family:'IBM Plex Mono', monospace;
@@ -121,6 +125,22 @@
   .f4{background:linear-gradient(135deg,#22201B,#B98A3E);}
   .f5{background:linear-gradient(135deg,#33463B,#B98A3E);}
   .f6{background:linear-gradient(135deg,#7A3230,#22201B);}
+
+  /* BACKGROUND VIDEO (shared: contact-sheet frames + work thumbnails) */
+  .bg-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+  }
+  .frame > *:not(.bg-video),
+  .work-thumb > *:not(.bg-video){
+    position:relative;
+    z-index:1;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bg-video{ display:none; }
+  }
 
   section{padding:88px 0;}
   section.tight{padding:64px 0;}
@@ -145,6 +165,7 @@
   }
   .work-thumb{
     height:120px; border-radius:2px;
+    position:relative; overflow:hidden;
   }
   .work-card h3{font-size:1.1rem;}
   .work-card p{font-size:0.85rem; opacity:0.72;}
@@ -220,20 +241,19 @@
     <div class="hero-meta">
       <span>Available for full-time roles</span>
       <span>B.A. Theology — Rochester University, 2026</span>
-      <span>Founder, AG Creation Marketing</span>
     </div>
   </div>
 
   <div class="contact-sheet">
     <div class="strip">
-      <div class="frame f1" data-n="01"><span>photo</span></div>
-      <div class="frame f2" data-n="02"><span>video</span></div>
-      <div class="frame f3" data-n="03"><span>brand</span></div>
-      <div class="frame f4" data-n="04"><span>ux/web</span></div>
-      <div class="frame f5" data-n="05"><span>social</span></div>
-      <div class="frame f6" data-n="06"><span>drone</span></div>
-      <div class="frame f1" data-n="07"><span>photo</span></div>
-      <div class="frame f2" data-n="08"><span>video</span></div>
+      <div class="frame f1" data-n="01"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>photo</span></div>
+      <div class="frame f2" data-n="02"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>video</span></div>
+      <div class="frame f3" data-n="03"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>brand</span></div>
+      <div class="frame f4" data-n="04"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>ux/web</span></div>
+      <div class="frame f5" data-n="05"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>social</span></div>
+      <div class="frame f6" data-n="06"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>drone</span></div>
+      <div class="frame f1" data-n="07"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>photo</span></div>
+      <div class="frame f2" data-n="08"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video><span>video</span></div>
     </div>
   </div>
 </header>
@@ -245,7 +265,7 @@
       <h2>Two disciplines, one purpose.</h2>
     </div>
     <div>
-      <p>I've spent the last decade running AG Creation Marketing, a full-service creative agency producing branding, web design, and multimedia for clients across education, healthcare, renewable energy, construction, entertainment, and faith-based organizations in the U.S. and Brazil. In parallel, I'm finishing a Theology degree — and the two paths have converged into one focus: helping churches and ministries tell their story with the same craft a national brand would expect.</p>
+      <p>I've spent the last decade running AG Creation Marketing, a full-service creative agency producing branding, web design, and multimedia for clients across education, healthcare, renewable energy, construction, entertainment, and faith-based organizations. In parallel, I'm finishing a Theology degree — and the two paths have converged into one focus: helping churches and ministries tell their story with the same craft a national brand would expect.</p>
       <p>I've directed documentary-style videos, fundraising campaigns, and outreach content for churches and Christian artists, produced 80+ educational videos for corporate and workforce training, and built websites and UI/UX systems in Figma, Framer, and WordPress. I also fly FPV drone for aerial production — a skill that keeps finding its way into everything from solar-farm documentation to worship films.</p>
       <div class="pillars" style="margin-top:28px;">
         <div class="pillar">
@@ -276,37 +296,37 @@
   </div>
   <div class="work-grid">
     <div class="work-card">
-      <div class="work-thumb f1"></div>
+      <div class="work-thumb f1"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
       <h3>Faith-Based &amp; Nonprofit Communications</h3>
       <p>Documentary-style videos, fundraising campaigns, and outreach content for churches, Christian artists, and community organizations.</p>
       <div class="tag-row"><span class="tag">Video</span><span class="tag">Fundraising</span></div>
     </div>
     <div class="work-card">
-      <div class="work-thumb f2"></div>
-      <h3>Apollo Engenharia — Construction &amp; Engineering</h3>
+      <div class="work-thumb f2"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+      <h3>Pollo Engenharia — Construction &amp; Engineering</h3>
       <p>30+ progress and institutional videos over a six-month engagement, translating technical work into brand storytelling.</p>
       <div class="tag-row"><span class="tag">Drone</span><span class="tag">Corporate video</span></div>
     </div>
     <div class="work-card">
-      <div class="work-thumb f3"></div>
+      <div class="work-thumb f3"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
       <h3>Continuum Solar — Renewable Energy</h3>
       <p>20+ marketing videos and full visual documentation across 10+ commercial solar installations.</p>
       <div class="tag-row"><span class="tag">Photography</span><span class="tag">Drone</span></div>
     </div>
     <div class="work-card">
-      <div class="work-thumb f4"></div>
+      <div class="work-thumb f4"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
       <h3>Corporate &amp; Healthcare Events</h3>
       <p>Coverage for 20+ conferences and executive programs, including Hospital Israelita Albert Einstein and Libbs.</p>
       <div class="tag-row"><span class="tag">Events</span><span class="tag">Interviews</span></div>
     </div>
     <div class="work-card">
-      <div class="work-thumb f5"></div>
+      <div class="work-thumb f5"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
       <h3>Corporate Education &amp; Training</h3>
       <p>80+ educational videos supporting onboarding, leadership development, and workforce training.</p>
       <div class="tag-row"><span class="tag">E-learning</span><span class="tag">Motion</span></div>
     </div>
     <div class="work-card">
-      <div class="work-thumb f6"></div>
+      <div class="work-thumb f6"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Wedding_short_2.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
       <h3>Entertainment &amp; Tourism</h3>
       <p>Audiovisual content for national concert tours and 50+ organized travel experiences.</p>
       <div class="tag-row"><span class="tag">Video</span><span class="tag">Drone</span></div>
@@ -370,7 +390,7 @@
   <div class="wrap">
     <div>
       <h3><span class="dot"></span>Currently based in Vista, CA</h3>
-      <p>Finishing a B.A. in Theology in 2026 and seeking a media, communications, or creative director role at a church or ministry in Southern California — building on 10+ years running AG Creation Marketing.</p>
+      <p>Finishing a B.A. in Theology in 2026 and seeking a media, communications, or creative director role at a church or ministry in Southern California.</p>
     </div>
     <a href="#contact" class="btn" style="background:var(--paper); color:var(--sanctuary);">Let's talk</a>
   </div>
@@ -393,6 +413,26 @@
 </section>
 
 <footer>© 2026 Alex Rodrigues Gomes — Vista, CA</footer>
+
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  var videos = document.querySelectorAll('.bg-video');
+  if(!videos.length) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var video = entry.target;
+      if(entry.isIntersecting){
+        if(!reduceMotion) video.play().catch(function(){});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.15 });
+  videos.forEach(function(video){ io.observe(video); });
+})();
+</script>
 
 </body>
 </html>
