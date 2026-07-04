@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Gomes — Creative for Ministry · v2</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2226%22 fill=%22%230E5B45%22/><text x=%2250%22 y=%2268%22 font-size=%2258%22 font-family=%22Georgia,serif%22 fill=%22%23F4F1EA%22 text-anchor=%22middle%22>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stage:#F1EDE6;
+    --stage-deep:#E8E2D7;
+    --ink:#23271F;
+    --ink-soft:rgba(35,39,31,0.72);
+    --emerald:#0E5B45;
+    --emerald-deep:#083D2E;
+    --amber:#F0A054;
+    --amber-deep:#DD7A2E;
+    --peach:#F7DDC2;
+    --glass:rgba(255,255,255,0.62);
+    --glass-edge:rgba(255,255,255,0.78);
+    --line:rgba(35,39,31,0.10);
+    --shadow-soft:0 18px 40px -22px rgba(35,39,31,0.28);
+    --shadow-lift:0 28px 56px -24px rgba(35,39,31,0.34);
+    --r-panel:36px;
+    --r-card:28px;
+    --r-thumb:18px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--stage);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    padding-top:96px;
+  }
+  /* Ambient stage glow */
+  .ambient{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(58% 44% at 88% -8%, rgba(240,160,84,0.30), transparent 62%),
+      radial-gradient(46% 40% at -8% 108%, rgba(14,91,69,0.14), transparent 60%),
+      radial-gradient(30% 26% at 50% 40%, rgba(255,255,255,0.5), transparent 70%);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--emerald);
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.05;
+    letter-spacing:-0.015em;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--emerald); outline-offset:3px; border-radius:6px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* NAV — floating glass pill */
+  nav{
+    position:fixed; top:16px; left:0; right:0; z-index:50;
+    padding:0 16px;
+  }
+  .nav-pill{
+    max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px; padding:0 10px 0 26px;
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(16px) saturate(1.5);
+    backdrop-filter:blur(16px) saturate(1.5);
+    border:1px solid var(--glass-edge);
+    border-radius:999px;
+    box-shadow:0 10px 30px -14px rgba(35,39,31,0.22);
+  }
+  .nav-name{font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem;}
+  .nav-links{display:flex; gap:26px; align-items:center; font-size:0.88rem;}
+  .nav-links a{text-decoration:none; opacity:0.72; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+
+  /* BUTTONS — pills */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:999px;
+    background:linear-gradient(160deg, #11694F, var(--emerald-deep));
+    color:#F4F1EA;
+    text-decoration:none; font-size:0.88rem; font-weight:500;
+    border:1px solid rgba(255,255,255,0.18);
+    box-shadow:0 12px 24px -12px rgba(8,61,46,0.55), inset 0 1px 0 rgba(255,255,255,0.22);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 18px 30px -12px rgba(8,61,46,0.6), inset 0 1px 0 rgba(255,255,255,0.22);}
+  .btn-ghost{
+    background:rgba(255,255,255,0.55);
+    color:var(--ink);
+    border:1px solid var(--line);
+    box-shadow:0 8px 18px -12px rgba(35,39,31,0.25);
+  }
+  .btn-ghost:hover{box-shadow:0 14px 26px -12px rgba(35,39,31,0.3);}
+  .nav-links .btn{padding:9px 18px; font-size:0.82rem;}
+
+  /* HERO */
+  header.hero{padding:72px 0 24px;}
+  .hero-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:end;}
+  .hero h1{font-size:clamp(2.6rem, 5.4vw, 4.4rem); margin:18px 0 24px;}
+  .hero h1 em{font-style:italic; color:var(--emerald);}
+  .hero p.sub{font-size:1.08rem; max-width:46ch; color:var(--ink-soft); margin-bottom:32px;}
+  .hero-actions{display:flex; gap:12px; margin-bottom:56px; flex-wrap:wrap;}
+  .hero-meta{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    display:flex; flex-direction:column; gap:8px;
+    padding-bottom:56px; text-align:right; color:var(--ink-soft);
+  }
+  .hero-meta span{
+    display:inline-block; align-self:flex-end;
+    background:rgba(255,255,255,0.5);
+    border:1px solid var(--glass-edge);
+    border-radius:999px; padding:6px 14px;
+  }
+
+  /* LIGHT TABLE — signature: floating glass video slides */
+  .light-table{padding:12px 0 40px; overflow:hidden;}
+  .slides{
+    display:flex; gap:18px;
+    overflow-x:auto;
+    padding:32px 24px 40px;
+    scrollbar-width:none;
+    scroll-snap-type:x proximity;
+  }
+  .slides::-webkit-scrollbar{display:none;}
+  .slide{
+    position:relative;
+    flex:0 0 auto;
+    width:212px; height:140px;
+    display:flex; align-items:flex-end;
+    padding:10px;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--glass-edge);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.35);
+    scroll-snap-align:center;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .slide:hover{transform:translateY(-6px) scale(1.02); box-shadow:var(--shadow-lift), inset 0 1px 0 rgba(255,255,255,0.35);}
+  .slide:nth-child(3n+2){margin-top:20px;}
+  .slide:nth-child(3n){margin-top:10px;}
+  .slide::before{
+    content:attr(data-n);
+    position:absolute; top:9px; left:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem; color:rgba(244,241,234,0.85);
+    z-index:1;
+  }
+  .slide span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.64rem; color:var(--ink);
+    background:rgba(244,241,234,0.82);
+    padding:4px 10px; border-radius:999px;
+  }
+  .f1{background:linear-gradient(135deg,var(--amber),var(--amber-deep));}
+  .f2{background:linear-gradient(135deg,var(--emerald),var(--emerald-deep));}
+  .f3{background:linear-gradient(135deg,var(--amber-deep),var(--emerald));}
+  .f4{background:linear-gradient(135deg,var(--emerald-deep),var(--amber));}
+  .f5{background:linear-gradient(135deg,var(--emerald),var(--amber));}
+  .f6{background:linear-gradient(135deg,var(--peach),var(--amber-deep));}
+
+  /* BACKGROUND VIDEO (shared: light-table slides + work thumbnails) */
+  .bg-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+  }
+  .slide > *:not(.bg-video),
+  .work-thumb > *:not(.bg-video){
+    position:relative;
+    z-index:1;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bg-video{ display:none; }
+  }
+
+  section{padding:64px 0;}
+  .section-head{margin-bottom:36px;}
+  .section-head h2{font-size:clamp(1.7rem, 3vw, 2.2rem); margin-top:10px; max-width:26ch;}
+
+  /* PANELS & CARDS */
+  .panel{
+    background:var(--glass);
+    border:1px solid var(--glass-edge);
+    border-radius:var(--r-panel);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.5);
+    padding:48px;
+  }
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.5fr; gap:48px;}
+  .about-grid p{margin-bottom:16px; color:var(--ink-soft); max-width:62ch;}
+  .pillars{display:flex; flex-direction:column; gap:14px; margin-top:28px;}
+  .pillar{
+    background:rgba(255,255,255,0.55);
+    border:1px solid rgba(255,255,255,0.7);
+    border-radius:20px;
+    padding:18px 22px;
+    box-shadow:0 8px 20px -16px rgba(35,39,31,0.3);
+  }
+  .pillar h3{font-size:1.02rem; margin-bottom:4px;}
+  .pillar h3::before{
+    content:""; display:inline-block;
+    width:8px; height:8px; border-radius:50%;
+    background:linear-gradient(160deg,var(--amber),var(--amber-deep));
+    margin-right:10px;
+  }
+  .pillar p{font-size:0.88rem; color:var(--ink-soft); margin:0;}
+
+  /* WORK */
+  .work-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+  .work-card{
+    background:var(--glass);
+    border:1px solid var(--glass-edge);
+    border-radius:var(--r-card);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.5);
+    padding:18px 18px 22px;
+    display:flex; flex-direction:column; gap:14px;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .work-card:hover{transform:translateY(-5px); box-shadow:var(--shadow-lift), inset 0 1px 0 rgba(255,255,255,0.5);}
+  .work-thumb{
+    height:150px; border-radius:var(--r-thumb);
+    position:relative; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.4);
+  }
+  .work-card h3{font-size:1.1rem; padding:0 6px;}
+  .work-card p{font-size:0.85rem; color:var(--ink-soft); padding:0 6px;}
+  .tag-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:auto; padding:0 6px;}
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.66rem;
+    padding:4px 11px; border-radius:999px;
+    background:rgba(35,39,31,0.05);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+  }
+  /* Featured card — deep emerald, per the ministry focus */
+  .work-card.featured{
+    background:linear-gradient(160deg,#11694F 0%, var(--emerald-deep) 80%);
+    border:1px solid rgba(255,255,255,0.22);
+    color:#F4F1EA;
+  }
+  .work-card.featured p{color:rgba(244,241,234,0.78);}
+  .work-card.featured .tag{background:rgba(244,241,234,0.12); border-color:rgba(244,241,234,0.25); color:rgba(244,241,234,0.85);}
+
+  /* SKILLS */
+  .skills-cols{display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px;}
+  .skill-group{
+    background:var(--glass);
+    border:1px solid var(--glass-edge);
+    border-radius:var(--r-card);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,0.5);
+    padding:26px;
+  }
+  .skill-group h3{
+    font-size:0.8rem; margin-bottom:16px;
+    text-transform:uppercase; letter-spacing:0.08em;
+    font-family:'IBM Plex Mono', monospace; font-weight:500;
+    color:var(--emerald);
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-size:0.82rem; padding:7px 14px;
+    background:rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:999px;
+  }
+
+  /* AVAILABILITY — amber glow panel */
+  .avail{
+    margin:0 auto; max-width:1080px; padding:0 24px;
+  }
+  .avail-panel{
+    background:
+      radial-gradient(80% 120% at 15% 0%, rgba(255,255,255,0.35), transparent 55%),
+      linear-gradient(135deg, #F6B26B 0%, var(--amber-deep) 90%);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:var(--r-panel);
+    box-shadow:0 24px 48px -20px rgba(221,122,46,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
+    padding:44px 48px;
+    color:#3A2410;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;
+  }
+  .avail-panel h3{font-size:1.35rem; margin-bottom:8px;}
+  .avail-panel p{font-size:0.9rem; max-width:48ch; opacity:0.85;}
+  .dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--emerald-deep); margin-right:10px; box-shadow:0 0 0 4px rgba(8,61,46,0.15);}
+  .avail-panel .btn{background:rgba(255,255,255,0.92); color:var(--emerald-deep); border:1px solid rgba(255,255,255,0.9); box-shadow:0 12px 24px -12px rgba(58,36,16,0.4);}
+
+  /* CONTACT — deep emerald panel */
+  .contact-panel{
+    background:
+      radial-gradient(70% 100% at 85% 0%, rgba(240,160,84,0.18), transparent 55%),
+      linear-gradient(160deg, #11694F 0%, var(--emerald-deep) 75%);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:var(--r-panel);
+    box-shadow:0 28px 56px -22px rgba(8,61,46,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+    padding:56px 48px;
+    color:#F4F1EA;
+    display:grid; grid-template-columns:1fr 1fr; gap:48px;
+  }
+  .contact-panel .eyebrow{color:var(--peach);}
+  .contact-panel h2{margin-top:10px; font-size:clamp(1.7rem, 3vw, 2.2rem);}
+  .contact-list{display:flex; flex-direction:column; gap:14px; font-size:0.95rem; align-self:center;}
+  .contact-list a{
+    text-decoration:none;
+    border-bottom:1px solid rgba(244,241,234,0.25);
+    padding-bottom:3px; align-self:flex-start;
+    transition:border-color .2s;
+  }
+  .contact-list a:hover{border-color:rgba(244,241,234,0.7);}
+
+  footer{padding:40px 0; text-align:center; font-size:0.78rem; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+
+  /* Reveal on scroll */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    .slide, .work-card, .btn{transition:none;}
+  }
+
+  @media (max-width:900px) and (min-width:761px){
+    .skills-cols{grid-template-columns:1fr 1fr;}
+    .work-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    body{padding-top:88px;}
+    .hero-grid, .about-grid, .skills-cols{grid-template-columns:1fr;}
+    .work-grid{grid-template-columns:1fr;}
+    .contact-panel{grid-template-columns:1fr; padding:40px 28px;}
+    .panel{padding:32px 24px;}
+    .avail-panel{padding:36px 28px;}
+    .hero-meta{text-align:left; padding-bottom:24px;}
+    .hero-meta span{align-self:flex-start;}
+    .nav-links a:not(.btn){display:none;}
+    header.hero{padding-top:40px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-pill">
+    <div class="nav-name">Alex Gomes</div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="#" class="btn">Download resume</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Vista, CA · Media &amp; Design for the church</span>
+      <h1>Telling the story your <em>congregation</em> is already living.</h1>
+      <p class="sub">I'm a theology graduate and creative director with 10+ years of experience in branding, photography, video production, and UX — I build the visual and digital presence that helps churches and ministries communicate clearly, inside and outside the walls.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn">See the work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span>Available for full-time roles</span>
+      <span>B.A. Theology — Rochester University, 2026</span>
+    </div>
+  </div>
+
+  <div class="light-table">
+    <div class="slides">
+      <div class="slide f1" data-n="01"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/photos.mp4" autoplay loop muted playsinline preload="metadata"></video><span>Studio & Event Photos </span></div>
+      <div class="slide f2" data-n="02"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/alda.mp4" autoplay loop muted playsinline preload="metadata"></video><span>Faith-Based Video</span></div>
+      <div class="slide f3" data-n="03"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Miguel_banner.mp4" autoplay loop muted playsinline preload="metadata"></video><span>Ministry Films</span></div>
+      <div class="slide f4" data-n="04"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/brand1.mp4" autoplay loop muted playsinline preload="metadata"></video><span>brand</span></div>
+      <div class="slide f5" data-n="05"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/ui_ux.mp4" autoplay loop muted playsinline preload="metadata"></video><span>ux/web</span></div>
+      <div class="slide f6" data-n="06"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/social.mp4" autoplay loop muted playsinline preload="metadata"></video><span>social media</span></div>
+      <div class="slide f1" data-n="07"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Drone_banner.mp4" autoplay loop muted playsinline preload="metadata"></video><span>drone</span></div>
+      <div class="slide f2" data-n="08"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/system_web.mp4" autoplay loop muted playsinline preload="metadata"></video><span>Web System</span></div>
+      <div class="slide f3" data-n="09"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/ultramaratona.mp4" autoplay loop muted playsinline preload="metadata"></video><span>Documentary Stories</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="panel about-grid reveal">
+      <div>
+        <span class="eyebrow">About</span>
+        <h2 style="margin-top:10px; font-size:clamp(1.7rem, 3vw, 2.2rem);">Two disciplines, one purpose.</h2>
+      </div>
+      <div>
+        <p>I’ve worked in content creation and digital communication for over 10 years, partnering with full-service agencies and clients to produce branding, web design, multimedia content, video production, and visual storytelling across education, healthcare, renewable energy, construction, entertainment, and faith-based organizations. In parallel, I am completing a Theology degree — and these two paths have converged into one clear focus: helping churches, ministries, and mission-driven organizations tell their stories with the same level of strategy, creativity, and excellence expected from a national brand.</p>
+        <p>I've directed documentary-style videos, fundraising campaigns, and outreach content for churches and Christian artists, produced 80+ educational videos for corporate and workforce training, and built websites and UI/UX systems in Figma, Framer, and WordPress. I also fly FPV drone for aerial production — a skill that keeps finding its way into everything from solar-farm documentation to worship films.</p>
+        <div class="pillars">
+          <div class="pillar">
+            <h3>Theological literacy</h3>
+            <p>B.A. in Theology, Rochester University (expected 2026) — I understand the message being built, not just the brief.</p>
+          </div>
+          <div class="pillar">
+            <h3>10+ years of production</h3>
+            <p>Photography, video, drone, motion graphics, and print — full ownership from concept to delivery.</p>
+          </div>
+          <div class="pillar">
+            <h3>Marketing &amp; UX systems</h3>
+            <p>Web design, UI/UX, SEO, paid media, and AI-assisted workflows behind the visuals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Selected work</span>
+      <h2>Ten years of stories, told for people who needed them told well.</h2>
+    </div>
+    <div class="work-grid">
+      <div class="work-card featured reveal">
+        <div class="work-thumb f1"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/miguel-ong.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Faith-Based &amp; Nonprofit Communications</h3>
+        <p>Documentary-style videos, fundraising campaigns, and outreach content for churches, Christian artists, and community organizations.</p>
+        <div class="tag-row"><span class="tag">Video</span><span class="tag">Fundraising</span></div>
+      </div>
+      <div class="work-card reveal">
+        <div class="work-thumb f2"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/pollo.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Pollo Engenharia — Construction &amp; Engineering</h3>
+        <p>30+ progress and institutional videos over a six-month engagement, translating technical work into brand storytelling.</p>
+        <div class="tag-row"><span class="tag">Drone</span><span class="tag">Corporate video</span></div>
+      </div>
+      <div class="work-card reveal">
+        <div class="work-thumb f3"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/continum.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Continuum Solar — Renewable Energy</h3>
+        <p>20+ marketing videos and full visual documentation across 10+ commercial solar installations.</p>
+        <div class="tag-row"><span class="tag">Photography</span><span class="tag">Drone</span></div>
+      </div>
+      <div class="work-card reveal">
+        <div class="work-thumb f4"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Libbs.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Corporate &amp; Healthcare Events</h3>
+        <p>Coverage for 20+ conferences and executive programs, including Hospital Israelita Albert Einstein and Libbs.</p>
+        <div class="tag-row"><span class="tag">Events</span><span class="tag">Interviews</span></div>
+      </div>
+      <div class="work-card reveal">
+        <div class="work-thumb f5"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/education.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Corporate Education &amp; Training</h3>
+        <p>80+ educational videos supporting onboarding, leadership development, and workforce training.</p>
+        <div class="tag-row"><span class="tag">E-learning</span><span class="tag">Motion</span></div>
+      </div>
+      <div class="work-card reveal">
+        <div class="work-thumb f6"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/travels.mp4" autoplay loop muted playsinline preload="metadata"></video></div>
+        <h3>Entertainment &amp; Tourism</h3>
+        <p>Audiovisual content for national concert tours and 50+ organized travel experiences.</p>
+        <div class="tag-row"><span class="tag">Video</span><span class="tag">Drone</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Skills &amp; tools</span>
+      <h2>What I bring to a media team.</h2>
+    </div>
+    <div class="skills-cols">
+      <div class="skill-group reveal">
+        <h3>Creative</h3>
+        <div class="chip-row">
+          <span class="chip">Creative direction</span>
+          <span class="chip">Photography</span>
+          <span class="chip">Video production</span>
+          <span class="chip">Motion graphics</span>
+          <span class="chip">Drone / FPV</span>
+          <span class="chip">Color grading</span>
+          <span class="chip">Branding</span>
+          <span class="chip">UI/UX design</span>
+          <span class="chip">AI image & video tools</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Marketing &amp; strategy</h3>
+        <div class="chip-row">
+          <span class="chip">Digital marketing</span>
+          <span class="chip">Content strategy</span>
+          <span class="chip">SEO fundamentals</span>
+          <span class="chip">Google &amp; Meta Ads</span>
+          <span class="chip">Email marketing</span>
+          <span class="chip">Google Analytics</span>
+          <span class="chip">AI-assisted workflows</span>
+          <span class="chip">Claude Code</span>
+          <span class="chip">Codex</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Tools</h3>
+        <div class="chip-row">
+          <span class="chip">Adobe Premiere Pro</span>
+          <span class="chip">After Effects</span>
+          <span class="chip">Photoshop</span>
+          <span class="chip">Illustrator</span>
+          <span class="chip">InDesign</span>
+          <span class="chip">Lightroom</span>
+          <span class="chip">Final Cut Pro</span>
+          <span class="chip">Figma</span>
+          <span class="chip">Framer</span>
+          <span class="chip">WordPress</span>
+          <span class="chip">n8n automation</span>
+          <span class="chip">VScode & AI coding tools</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="avail">
+  <div class="avail-panel reveal">
+    <div>
+      <h3><span class="dot"></span>Currently based in Vista, CA</h3>
+      <p>Finishing a B.A. in Theology in 2026 and seeking a media, communications, or creative director role at a church or ministry in Southern California.</p>
+    </div>
+    <a href="#contact" class="btn">Let's talk</a>
+  </div>
+</div>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-panel reveal">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2>Building a media team? <br>I'd love to help.</h2>
+      </div>
+      <div class="contact-list">
+        <a href="mailto:alexgomes.production@gmail.com">alexgomes.production@gmail.com</a>
+        <a href="tel:+19496858380">(949) 685-8380</a>
+        <a href="https://www.agcreationmkt.com">www.agcreationmkt.com</a>
+        <a href="#">linkedin.com/in/alexrodriguesgomes</a>
+        <a href="#">Portfolio PDF / resume download</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Alex Rodrigues Gomes — Vista, CA</footer>
+
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var videos = document.querySelectorAll('.bg-video');
+  if(videos.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var video = entry.target;
+        if(entry.isIntersecting){
+          if(!reduceMotion) video.play().catch(function(){});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.15 });
+    videos.forEach(function(video){ io.observe(video); });
+  }
+
+  var reveals = document.querySelectorAll('.reveal');
+  if(reveals.length && !reduceMotion){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          ro.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function(el){ ro.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+
+</body>
+</html>
