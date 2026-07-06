@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Gomes — Creative for Ministry · v3</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2214%22 fill=%22%23FAFAF7%22/><text x=%2250%22 y=%2268%22 font-size=%2258%22 font-family=%22Georgia,serif%22 fill=%22%230B0B0A%22 text-anchor=%22middle%22>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --paper-2:#F1F1EC;
+    --ink:#0B0B0A;
+    --dim:rgba(11,11,10,0.55);
+    --faint:rgba(11,11,10,0.34);
+    --line:rgba(11,11,10,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:auto;}
+  html.lenis, html.lenis body{height:auto;}
+  .lenis.lenis-smooth{scroll-behavior:auto !important;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(70% 50% at 30% 0%, rgba(11,11,10,0.03), transparent 70%),
+      radial-gradient(60% 46% at 85% 100%, rgba(11,11,10,0.04), transparent 65%);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:rgba(11,11,10,0.12);}
+
+  /* ---- fixed layers ---- */
+  #gl{position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block;}
+  .grain{
+    position:fixed; inset:-50%; width:200%; height:200%; z-index:60; pointer-events:none;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+  main{position:relative; z-index:2;}
+
+  /* ---- shared type ---- */
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.66rem; font-weight:400;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--dim);
+  }
+  h1,h2{
+    font-weight:500;
+    letter-spacing:-0.02em;
+    line-height:1.04;
+  }
+  a{color:inherit;}
+  a:focus-visible{outline:1.5px solid var(--ink); outline-offset:4px;}
+
+  /* ---- nav ---- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 30px;
+    background:rgba(250,250,247,0.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.64rem; letter-spacing:0.16em; text-transform:uppercase;
+  }
+  nav a{text-decoration:none; color:var(--dim); transition:color .25s;}
+  nav a:hover{color:var(--ink);}
+  .nav-brand{color:var(--ink);}
+  .nav-links{display:flex; gap:28px;}
+
+  /* ---- hero ---- */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:130px 24px 90px;
+    position:relative;
+  }
+  .hero .eyebrow{margin-bottom:36px;}
+  .hero h1{
+    font-size:clamp(2.5rem, 5.8vw, 5.2rem);
+    max-width:18ch;
+  }
+  .hero h1 .line{display:block; overflow:hidden; padding:0.05em 0;}
+  .hero h1 .line span{display:inline-block;}
+  .hero-sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.76rem; line-height:1.95;
+    letter-spacing:0.03em;
+    color:var(--dim);
+    max-width:52ch;
+    margin-top:36px;
+  }
+  .scroll-cue{
+    position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--faint);
+  }
+  .scroll-cue::after{
+    content:""; width:1px; height:44px;
+    background:linear-gradient(to bottom, var(--ink), transparent);
+    animation:cue 2.4s ease-in-out infinite;
+  }
+  @keyframes cue{
+    0%{transform:scaleY(0); transform-origin:top;}
+    45%{transform:scaleY(1); transform-origin:top;}
+    55%{transform:scaleY(1); transform-origin:bottom;}
+    100%{transform:scaleY(0); transform-origin:bottom;}
+  }
+
+  /* ---- background video pattern (same contract as index.html) ---- */
+  .bg-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bg-video{display:none;}
+  }
+
+  /* ---- capabilities strip ---- */
+  .strip-section{padding:110px 0 130px; overflow:hidden;}
+  .strip-head{text-align:center; margin-bottom:48px; padding:0 24px;}
+  .strip-viewport{width:100%; overflow:hidden;}
+  .strip-track{
+    display:flex; gap:14px;
+    width:max-content;
+    padding:0 30px;
+    will-change:transform;
+  }
+  .tile{
+    position:relative; overflow:hidden;
+    flex:0 0 auto;
+    width:min(250px, 62vw);
+    aspect-ratio:16/10;
+    border-radius:8px;
+    background:linear-gradient(150deg, #ECECE7, #E0E0DA);
+  }
+  .tile .bg-video{filter:grayscale(1); transition:filter .5s ease;}
+  .tile:hover .bg-video{filter:grayscale(0);}
+  .tile::after{
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    border-radius:8px;
+    box-shadow:inset 0 0 0 1px rgba(11,11,10,0.10);
+    background:linear-gradient(to top, rgba(250,250,247,0.4), transparent 42%);
+  }
+  .tile-label{
+    position:absolute; left:12px; bottom:10px; z-index:2;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.58rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--ink);
+  }
+  .tile-n{
+    position:absolute; top:10px; left:12px; z-index:2;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.56rem; letter-spacing:0.14em;
+    color:var(--faint);
+  }
+
+  /* ---- work spiral ---- */
+  .work-head{text-align:center; padding:30px 24px 10px;}
+  .spiral-section{position:relative;}
+  .spiral-stage{
+    position:relative;
+    padding:40px 0 90px;
+  }
+  /* default (no JS / reduced motion): clean stacked list */
+  .sp-item{
+    width:min(680px, 92vw);
+    margin:0 auto 90px;
+    text-align:center;
+  }
+  .sp-card{
+    position:relative; overflow:hidden;
+    aspect-ratio:16/9;
+    border-radius:12px;
+    background:linear-gradient(150deg, #ECECE7, #DEDED8);
+    box-shadow:0 40px 80px -40px rgba(11,11,10,0.35);
+  }
+  .sp-card::after{
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    border-radius:12px;
+    box-shadow:inset 0 0 0 1px rgba(11,11,10,0.10);
+  }
+  .sp-num{
+    position:absolute; top:14px; left:18px; z-index:2;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.6rem; letter-spacing:0.2em;
+    color:var(--ink);
+    background:rgba(250,250,247,0.75);
+    padding:3px 8px; border-radius:4px;
+  }
+  .sp-meta{margin-top:30px;}
+  .sp-rail{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--faint);
+    margin-bottom:14px;
+  }
+  .sp-meta h2{font-size:clamp(1.5rem, 3vw, 2.3rem);}
+  .sp-meta p{
+    font-size:0.92rem; line-height:1.7;
+    color:var(--dim);
+    max-width:52ch;
+    margin:12px auto 0;
+  }
+
+  /* spiral mode (applied by JS) */
+  .js-spiral .spiral-stage{
+    height:100vh;
+    height:100svh;
+    padding:0;
+    perspective:1500px;
+    overflow:hidden;
+  }
+  .js-spiral .sp-item{
+    position:absolute; inset:0;
+    width:auto; margin:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    pointer-events:none;
+  }
+  .js-spiral .sp-card{
+    width:min(620px, 82vw);
+    will-change:transform, opacity, filter;
+  }
+  .js-spiral .sp-meta{
+    margin-top:26px;
+    max-width:min(620px, 86vw);
+    will-change:transform, opacity;
+  }
+  .spiral-hint{
+    display:none;
+    position:absolute; right:30px; top:50%;
+    transform:translateY(-50%);
+    writing-mode:vertical-rl;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.56rem; letter-spacing:0.34em; text-transform:uppercase;
+    color:var(--faint);
+  }
+  .js-spiral .spiral-hint{display:block;}
+
+  /* ---- statement ---- */
+  .statement{
+    min-height:80vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:150px 24px;
+  }
+  .statement h2{
+    font-size:clamp(2.2rem, 6vw, 4.8rem);
+    max-width:16ch;
+  }
+  .statement h2 .st-word{display:inline-block;}
+  .statement p{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem; line-height:2.05;
+    letter-spacing:0.03em;
+    color:var(--dim);
+    max-width:56ch;
+    margin-top:40px;
+  }
+
+  /* ---- skills ---- */
+  .skills{
+    max-width:1060px; margin:0 auto;
+    padding:60px 30px 150px;
+  }
+  .skills-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:44px;
+    margin-top:46px;
+  }
+  .skill-col{border-top:1px solid var(--line); padding-top:20px;}
+  .skill-col h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem; font-weight:500;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:16px;
+  }
+  .skill-col ul{list-style:none;}
+  .skill-col li{
+    font-size:0.88rem; color:var(--dim);
+    padding:5px 0;
+  }
+
+  /* ---- finale ---- */
+  .finale{
+    min-height:90vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:130px 24px 90px;
+    border-top:1px solid var(--line);
+  }
+  .finale h2{
+    font-size:clamp(2.3rem, 6vw, 5rem);
+    max-width:15ch;
+  }
+  .avail-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--dim);
+    margin-top:38px;
+    max-width:54ch; line-height:2.1;
+  }
+  .dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--ink); margin-right:10px;
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.25;}}
+  .contact-links{
+    display:flex; flex-wrap:wrap; justify-content:center;
+    gap:14px 40px;
+    margin-top:52px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem; letter-spacing:0.06em;
+  }
+  .contact-links a{
+    text-decoration:none; color:var(--ink);
+    border-bottom:1px solid var(--line);
+    padding-bottom:4px;
+    transition:border-color .25s;
+  }
+  .contact-links a:hover{border-color:var(--ink);}
+
+  footer{
+    position:relative; z-index:2;
+    padding:32px 24px;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--faint);
+    border-top:1px solid var(--line);
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width:900px){
+    .skills-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    nav{padding:16px 20px;}
+    .nav-links{gap:18px;}
+    .skills-grid{grid-template-columns:1fr;}
+    .strip-viewport{overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+    .strip-viewport::-webkit-scrollbar{display:none;}
+    .strip-section{padding:90px 0;}
+    .statement{min-height:auto; padding:120px 20px;}
+    .js-spiral .sp-card{width:min(480px, 86vw);}
+    .spiral-hint{display:none !important;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .scroll-cue::after, .dot{animation:none;}
+    #gl{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<nav>
+  <a href="#top" class="nav-brand">Alex Gomes — V3</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+    <a href="index.html">V1 ↗</a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <header class="hero">
+    <p class="eyebrow">Vista, CA — Media &amp; Design for the Church</p>
+    <h1>
+      <span class="line"><span>Telling the story</span></span>
+      <span class="line"><span>your congregation</span></span>
+      <span class="line"><span>is already living.</span></span>
+    </h1>
+    <p class="hero-sub">Theology graduate &amp; creative director — 10+ years of branding, photography, film and UX, now in service of churches and ministries that have a story worth telling well.</p>
+    <div class="scroll-cue">Scroll</div>
+  </header>
+
+  <section class="strip-section" id="capabilities" aria-label="Capabilities">
+    <div class="strip-head">
+      <p class="eyebrow">Capabilities — nine disciplines, one storyteller</p>
+    </div>
+    <div class="strip-viewport">
+      <div class="strip-track">
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/photos.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">01</span><span class="tile-label">Studio &amp; Event Photos</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/alda.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">02</span><span class="tile-label">Faith-Based Video</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Miguel_banner.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">03</span><span class="tile-label">Ministry Films</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/brand1.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">04</span><span class="tile-label">Brand</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/ui_ux.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">05</span><span class="tile-label">UX / Web</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/social.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">06</span><span class="tile-label">Social Media</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Drone_banner.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">07</span><span class="tile-label">Drone / FPV</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/system_web.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">08</span><span class="tile-label">Web Systems</span></div>
+        <div class="tile"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/ultramaratona.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="tile-n">09</span><span class="tile-label">Documentary Stories</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="work-head" id="work">
+    <p class="eyebrow">Selected work — six stories, ten years</p>
+  </div>
+
+  <section class="spiral-section" aria-label="Selected work">
+    <div class="spiral-stage">
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/miguel-ong.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">01 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">01 — Video · Fundraising</p>
+          <h2>Faith-Based &amp; Nonprofit</h2>
+          <p>Documentary-style films, fundraising campaigns and outreach content for churches, Christian artists and community organizations.</p>
+        </div>
+      </div>
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/pollo.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">02 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">02 — Drone · Corporate video</p>
+          <h2>Pollo Engenharia</h2>
+          <p>30+ progress and institutional videos over a six-month engagement, translating construction and engineering work into brand storytelling.</p>
+        </div>
+      </div>
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/continum.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">03 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">03 — Photography · Drone</p>
+          <h2>Continuum Solar</h2>
+          <p>20+ marketing videos and full visual documentation across 10+ commercial solar installations.</p>
+        </div>
+      </div>
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/Libbs.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">04 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">04 — Events · Interviews</p>
+          <h2>Corporate &amp; Healthcare Events</h2>
+          <p>Coverage for 20+ conferences and executive programs, including Hospital Israelita Albert Einstein and Libbs.</p>
+        </div>
+      </div>
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/education.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">05 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">05 — E-learning · Motion</p>
+          <h2>Corporate Education &amp; Training</h2>
+          <p>80+ educational videos supporting onboarding, leadership development and workforce training.</p>
+        </div>
+      </div>
+
+      <div class="sp-item">
+        <div class="sp-card"><video class="bg-video" src="https://supabasestudio.agcreationmkt.cloud/storage/v1/object/public/portifolio-opt/travels.mp4" autoplay loop muted playsinline preload="metadata"></video><span class="sp-num">06 / 06</span></div>
+        <div class="sp-meta">
+          <p class="sp-rail">06 — Video · Drone</p>
+          <h2>Entertainment &amp; Tourism</h2>
+          <p>Audiovisual content for national concert tours and 50+ organized travel experiences.</p>
+        </div>
+      </div>
+
+      <span class="spiral-hint">Scroll — the reel turns</span>
+    </div>
+  </section>
+
+  <section class="statement" id="about">
+    <h2 aria-label="Two disciplines, one purpose."><span class="st-line">Two disciplines,</span> <span class="st-line">one purpose.</span></h2>
+    <p class="fade-up">Ten years producing for agencies and national brands — branding, film, drone, web — now converging with a Theology degree into one clear focus: helping churches and mission-driven organizations tell their stories with the strategy and excellence of a national brand.</p>
+  </section>
+
+  <section class="skills" id="skills">
+    <p class="eyebrow fade-up">Skills &amp; tools — what I bring to a media team</p>
+    <div class="skills-grid">
+      <div class="skill-col fade-up">
+        <h3>Creative</h3>
+        <ul>
+          <li>Creative direction</li>
+          <li>Photography</li>
+          <li>Video production</li>
+          <li>Motion graphics</li>
+          <li>Drone / FPV</li>
+          <li>Color grading</li>
+          <li>Branding · UI/UX design</li>
+          <li>AI image &amp; video tools</li>
+        </ul>
+      </div>
+      <div class="skill-col fade-up">
+        <h3>Marketing &amp; strategy</h3>
+        <ul>
+          <li>Digital marketing</li>
+          <li>Content strategy</li>
+          <li>SEO fundamentals</li>
+          <li>Google &amp; Meta Ads</li>
+          <li>Email marketing</li>
+          <li>Google Analytics</li>
+          <li>AI-assisted workflows</li>
+          <li>Claude Code · Codex</li>
+        </ul>
+      </div>
+      <div class="skill-col fade-up">
+        <h3>Tools</h3>
+        <ul>
+          <li>Premiere Pro · After Effects</li>
+          <li>Photoshop · Illustrator</li>
+          <li>InDesign · Lightroom</li>
+          <li>Final Cut Pro</li>
+          <li>Figma · Framer</li>
+          <li>WordPress</li>
+          <li>n8n automation</li>
+          <li>VS Code &amp; AI coding tools</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale" id="contact">
+    <p class="eyebrow fade-up" style="margin-bottom:28px;">Contact</p>
+    <h2 class="fade-up">Building a media team?</h2>
+    <p class="avail-line fade-up"><span class="dot"></span>Currently based in Vista, CA — finishing a B.A. in Theology (2026) and seeking a media or creative director role at a church in Southern California.</p>
+    <div class="contact-links fade-up">
+      <a href="mailto:alexgomes.production@gmail.com">alexgomes.production@gmail.com</a>
+      <a href="tel:+19496858380">(949) 685-8380</a>
+      <a href="https://www.agcreationmkt.com">agcreationmkt.com</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Alex Rodrigues Gomes — Vista, CA · V3 Cinematic</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- video pause when off-screen (same pattern as index.html) ---------- */
+  if('IntersectionObserver' in window){
+    var vids = document.querySelectorAll('.bg-video');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          if(!reduceMotion) entry.target.play().catch(function(){});
+        } else {
+          entry.target.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+    vids.forEach(function(v){ io.observe(v); });
+  }
+
+  if(reduceMotion) return; /* static, readable page — no smooth scroll, no WebGL, no scrub */
+
+  var hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+
+  /* ---------- Lenis smooth scroll + GSAP ScrollTrigger ---------- */
+  var lenis = null;
+  if(typeof Lenis !== 'undefined'){
+    lenis = new Lenis({ lerp: 0.09 });
+    if(hasGsap){
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href');
+        if(id.length < 2) return;
+        var target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: 0, duration: 1.5 });
+      });
+    });
+  }
+  function currentScroll(){ return lenis ? lenis.scroll : (window.scrollY || 0); }
+
+  /* ---------- cloud background (Three.js fbm shader, grayscale mist) ---------- */
+  (function(){
+    if(typeof THREE === 'undefined') return;
+    var canvas = document.getElementById('gl');
+    var renderer;
+    try{
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: false, powerPreference: 'low-power' });
+    }catch(err){ canvas.style.display = 'none'; return; }
+
+    var isSmall = window.matchMedia('(max-width: 760px)').matches;
+    /* clouds are soft — render at reduced resolution and let CSS upscale */
+    var PR = isSmall ? 0.5 : 0.7;
+    renderer.setPixelRatio(PR);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.Camera();
+    var uniforms = {
+      uTime: { value: 0 },
+      uScroll: { value: 0 },
+      uRes: { value: new THREE.Vector2(window.innerWidth * PR, window.innerHeight * PR) }
+    };
+    var mat = new THREE.ShaderMaterial({
+      uniforms: uniforms,
+      depthTest: false,
+      depthWrite: false,
+      vertexShader: 'void main(){ gl_Position = vec4(position, 1.0); }',
+      fragmentShader: [
+        'precision highp float;',
+        'uniform float uTime;',
+        'uniform float uScroll;',
+        'uniform vec2 uRes;',
+        'float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
+        'float noise(vec2 p){',
+        '  vec2 i = floor(p); vec2 f = fract(p);',
+        '  f = f * f * (3.0 - 2.0 * f);',
+        '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),',
+        '             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
+        '}',
+        'float fbm(vec2 p){',
+        '  float v = 0.0; float a = 0.5;',
+        '  for(int i = 0; i < 4; i++){ v += a * noise(p); p *= 2.03; a *= 0.5; }',
+        '  return v;',
+        '}',
+        'void main(){',
+        '  vec2 uv = gl_FragCoord.xy / uRes;',
+        '  vec2 p = uv * vec2(uRes.x / uRes.y, 1.0) * 1.5;',
+        '  float t = uTime * 0.018;',
+        '  vec2 drift = vec2(t * 0.9, uScroll * 0.16 + t * 0.12);',
+        '  float q = fbm(p + drift);',
+        '  float c = fbm(p * 1.7 + q * 1.5 + vec2(-t * 0.7, t * 0.35));',
+        '  float cloud = smoothstep(0.32, 0.9, c);',
+        '  vec3 paper = vec3(0.982, 0.982, 0.970);',
+        '  vec3 mist  = vec3(0.868, 0.872, 0.860);',
+        '  vec3 col = mix(paper, mist, cloud * 0.55);',
+        '  col = mix(col, vec3(0.995), (1.0 - uv.y) * 0.10);',
+        '  gl_FragColor = vec4(col, 1.0);',
+        '}'
+      ].join('\n')
+    });
+    var quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat);
+    quad.frustumCulled = false;
+    scene.add(quad);
+
+    var clock = new THREE.Clock();
+    function render(){
+      uniforms.uTime.value = clock.getElapsedTime();
+      uniforms.uScroll.value = currentScroll() * 0.0006;
+      renderer.render(scene, camera);
+    }
+    if(hasGsap){ gsap.ticker.add(render); }
+    else { (function loop(){ render(); requestAnimationFrame(loop); })(); }
+
+    window.addEventListener('resize', function(){
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.uRes.value.set(window.innerWidth * PR, window.innerHeight * PR);
+    });
+  })();
+
+  if(!hasGsap) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- hero load sequence ---------- */
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .from('.hero .eyebrow', { opacity: 0, y: 16, duration: 0.9 }, 0.15)
+    .from('.hero h1 .line span', { yPercent: 115, duration: 1.15, stagger: 0.11, ease: 'power4.out' }, 0.3)
+    .from('.hero-sub', { opacity: 0, y: 22, duration: 1 }, 0.9)
+    .from('.scroll-cue', { opacity: 0, duration: 1 }, 1.25)
+    .from('nav', { opacity: 0, duration: 0.9 }, 1.05);
+
+  gsap.to('.hero > *', {
+    opacity: 0, y: -90, ease: 'none', stagger: 0.02,
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 30%', scrub: true }
+  });
+
+  /* ---------- capabilities strip: horizontal drift with scroll (desktop) ---------- */
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 761px)', function(){
+    var track = document.querySelector('.strip-track');
+    gsap.fromTo(track, { x: 0 }, {
+      x: function(){ return -(track.scrollWidth - window.innerWidth + 30); },
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.strip-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+        invalidateOnRefresh: true
+      }
+    });
+  });
+
+  /* ---------- work spiral: the reel turns as you scroll ---------- */
+  (function(){
+    var section = document.querySelector('.spiral-section');
+    var items = Array.prototype.slice.call(section.querySelectorAll('.sp-item'));
+    var N = items.length;
+    if(N < 2) return;
+    section.classList.add('js-spiral');
+
+    var isSmall = window.matchMedia('(max-width: 760px)').matches;
+    var STEP = 1.05;                       /* radians between cards on the helix */
+    var R = isSmall ? 320 : 560;           /* helix radius (px) */
+    var V = isSmall ? 26 : 44;             /* vertical rise per card (px) */
+
+    var parts = items.map(function(item){
+      return { item: item, card: item.querySelector('.sp-card'), meta: item.querySelector('.sp-meta') };
+    });
+
+    function layout(p){
+      for(var i = 0; i < N; i++){
+        var rel = i - p;
+        var abs = Math.abs(rel);
+        var part = parts[i];
+        if(abs > 2.4){
+          part.item.style.visibility = 'hidden';
+          continue;
+        }
+        part.item.style.visibility = 'visible';
+        var a = rel * STEP;
+        var x = Math.sin(a) * R;
+        var z = Math.cos(a) * R - R;
+        var y = rel * -V;
+        var rotY = -(a * 180 / Math.PI) * 0.55;
+        part.card.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateY(' + rotY.toFixed(2) + 'deg)';
+        part.card.style.filter = 'grayscale(' + Math.min(abs * 1.4, 1).toFixed(3) + ')';
+        part.card.style.opacity = Math.max(1 - abs * 0.32, 0.15).toFixed(3);
+        part.item.style.zIndex = String(100 - Math.round(abs * 12));
+        var mOp = Math.max(1 - abs * 2.2, 0);
+        part.meta.style.opacity = mOp.toFixed(3);
+        part.meta.style.transform = 'translateY(' + (rel * -22).toFixed(1) + 'px)';
+        part.meta.style.visibility = mOp <= 0.01 ? 'hidden' : 'visible';
+      }
+    }
+    layout(0);
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: '+=' + (N * 85) + '%',
+      pin: true,
+      scrub: 1,
+      snap: { snapTo: 1 / (N - 1), duration: { min: 0.2, max: 0.6 }, ease: 'power2.out' },
+      onUpdate: function(self){ layout(self.progress * (N - 1)); }
+    });
+  })();
+
+  /* ---------- statement: word-by-word reveal ---------- */
+  document.querySelectorAll('.statement .st-line').forEach(function(lineEl){
+    var words = lineEl.textContent.trim().split(/\s+/);
+    lineEl.innerHTML = words.map(function(w){ return '<span class="st-word">' + w + '</span>'; }).join(' ');
+  });
+  gsap.fromTo('.statement .st-word',
+    { opacity: 0.12 },
+    { opacity: 1, stagger: 0.25, ease: 'none',
+      scrollTrigger: { trigger: '.statement', start: 'top 75%', end: 'center 48%', scrub: true } });
+
+  /* ---------- generic fade-ups ---------- */
+  gsap.utils.toArray('.fade-up').forEach(function(el){
+    gsap.from(el, {
+      opacity: 0, y: 36, duration: 1.05, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
+    });
+  });
+
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+
+</body>
+</html>
