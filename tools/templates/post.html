@@ -1,0 +1,77 @@
+{{HEAD}}
+{{NAV}}
+
+<div class="wrap post-head">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; <span>{{TITLE}}</span>
+  </nav>
+  <span class="eyebrow">Living Devotional &middot; {{SCRIPTURE_REF}}</span>
+  <h1>{{TITLE}}</h1>
+  <div class="post-byline">
+    <span>By Alex Rodrigues Gomes</span>
+    <span>&middot;</span>
+    <time datetime="{{PUBLISHED}}">{{PUBLISHED_HUMAN}}</time>
+    <span>&middot;</span>
+    <span>{{READ_MINUTES}} min read</span>
+    <span>&middot;</span>
+    <span>Watch: {{DURATION_HUMAN}}</span>
+  </div>
+</div>
+
+<article>
+  <button class="facade" data-yt="{{YOUTUBE_ID}}" aria-label="Play: {{TITLE}}">
+    <span class="thumb">
+      <img src="https://i.ytimg.com/vi/{{YOUTUBE_ID}}/maxresdefault.jpg"
+           onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/{{YOUTUBE_ID}}/hqdefault.jpg';"
+           width="1280" height="720" alt="{{THUMB_ALT}}">
+    </span>
+    <span class="play">
+      <svg viewBox="0 0 68 68" aria-hidden="true">
+        <circle cx="34" cy="34" r="33" fill="rgba(35,47,41,0.82)" stroke="#EFEAE1" stroke-width="1.5"/>
+        <path d="M27 21l24 13-24 13z" fill="#EFEAE1"/>
+      </svg>
+      <span>Play episode</span>
+    </span>
+  </button>
+  <p class="video-caption">
+    <span>Living Devotional &middot; {{DURATION_HUMAN}}</span>
+    <a href="https://www.youtube.com/watch?v={{YOUTUBE_ID}}" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+  </p>
+
+  <div class="quick-answer">
+    <span class="eyebrow">The short answer</span>
+    <p>{{QUICK_ANSWER}}</p>
+  </div>
+
+{{SECTIONS}}
+
+{{SCRIPTURE_BLOCK}}
+
+{{FAQ_BLOCK}}
+
+  <aside class="ai-note">
+    <span class="eyebrow">How this episode was made</span>
+    <h3>AI made the pictures. I made the film.</h3>
+    <p>Every frame you see in this video was generated with AI image and video tools. I want to say that plainly, at the top, because you deserve to know what you are looking at.</p>
+    <p>What AI did not do is decide anything. I wrote the script and checked the theology against the text. I broke it into {{SCENE_COUNT}} scenes and wrote the prompt, the camera move, and the direction for every one of them. I built the character reference sheets so Joseph looks like the same man at seventeen and at thirty. I generated, rejected, regenerated, graded, cut, scored, and mixed it. I paid for every render, including the ones I threw away &mdash; and I threw away a lot.</p>
+    <p>The tools are a camera I do not have to fly to Egypt to operate. The choices are still mine. <a href="/blog/how-i-make-these/">Here is the whole pipeline, start to finish</a> &mdash; including what it costs.</p>
+    <p class="sig">&mdash; Alex</p>
+  </aside>
+</article>
+
+<div class="cta-band">
+  <div class="inner">
+    <span class="eyebrow">Living Devotional</span>
+    <h2>New cinematic Bible story every week.</h2>
+    <p>If this one landed, the channel is where the rest live &mdash; full films, no filler, made the way I would make them for a client.</p>
+    <div class="cta-actions">
+      <a class="btn" href="{{CHANNEL_URL}}?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+      <a class="btn btn-outline" href="/blog/">Read more episodes</a>
+    </div>
+{{NEXT_TEASER}}
+  </div>
+</div>
+
+{{POST_NAV}}
+
+{{FOOTER}}

@@ -1,0 +1,304 @@
+/* ==========================================================================
+   Living Devotional blog — shared styles
+   Palette, type scale, nav, buttons and footer are copied verbatim from
+   index.html so the blog is visually indistinguishable from the homepage.
+   Edit here; the generator does not touch this file.
+   ========================================================================== */
+
+:root{
+  --paper:#EFEAE1;
+  --paper-dim:#E4DECF;
+  --ink:#22201B;
+  --sanctuary:#33463B;
+  --sanctuary-dark:#232F29;
+  --gold:#B98A3E;
+  --red:#7A3230;
+  --line: rgba(34,32,27,0.16);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  line-height:1.5;
+}
+h1,h2,h3{
+  font-family:'Fraunces', serif;
+  font-weight:500;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+}
+a{color:inherit;}
+.wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--sanctuary);
+}
+.rule{height:1px; background:var(--line); width:100%;}
+
+/* NAV — identical to index.html */
+nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(239,234,225,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+.nav-name{font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem; text-decoration:none;}
+.nav-links{display:flex; gap:28px; align-items:center; font-size:0.88rem;}
+.nav-links a{text-decoration:none; opacity:0.75; transition:opacity .2s;}
+.nav-links a:hover{opacity:1;}
+.nav-links a.current{opacity:1; border-bottom:1px solid var(--gold);}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 18px; border-radius:2px;
+  background:var(--sanctuary); color:var(--paper);
+  text-decoration:none; font-size:0.85rem; font-weight:500;
+  border:1px solid var(--sanctuary);
+  transition:background .2s, color .2s;
+}
+.btn:hover{background:var(--sanctuary-dark);}
+.btn-outline{background:transparent; color:var(--ink); border:1px solid var(--line);}
+.btn-outline:hover{border-color:var(--ink); background:transparent;}
+.tag{
+  font-family:'IBM Plex Mono', monospace; font-size:0.66rem;
+  padding:3px 8px; border:1px solid var(--line); border-radius:20px;
+  opacity:0.75;
+}
+footer{padding:32px 0; text-align:center; font-size:0.78rem; opacity:0.55; font-family:'IBM Plex Mono', monospace;}
+footer a{color:inherit;}
+
+/* --------------------------------------------------------------------------
+   THUMBNAIL TREATMENT
+   YouTube stills arrive in arbitrary colour. Grayscale + a sanctuary/gold
+   multiply gradient + grain forces every thumbnail into the site palette,
+   so the grid reads as one system no matter what the source art looks like.
+   -------------------------------------------------------------------------- */
+.thumb{
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,#33463B,#22201B);
+  aspect-ratio:16/9;
+}
+.thumb img{
+  display:block; width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(1.05) brightness(0.95);
+  transition:filter .45s ease, transform .45s ease;
+}
+.thumb::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(150deg, rgba(51,70,59,0.72), rgba(185,138,62,0.42));
+  mix-blend-mode:multiply;
+}
+/* film grain, echoing the cinematic feel of the hero contact sheet */
+.thumb::before{
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  opacity:0.18;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+a:hover .thumb img{filter:grayscale(0.25) contrast(1.02) brightness(1); transform:scale(1.03);}
+
+/* --------------------------------------------------------------------------
+   POST GRID (blog hub + homepage section reuse these class names)
+   -------------------------------------------------------------------------- */
+.post-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+/* Collapse columns to match the post count — an empty grid cell would otherwise
+   show the container's hairline background as a solid block. */
+.post-grid[data-count="1"]{grid-template-columns:1fr;}
+.post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
+/* A lone post becomes a horizontal featured row — thumbnail left, text right.
+   Full width in a single column would blow the still up to billboard size. */
+.post-grid[data-count="1"] .post-card{
+  display:grid; grid-template-columns:1fr 1fr; padding:0; align-items:stretch;
+}
+.post-grid[data-count="1"] .post-card .thumb{margin-bottom:0; height:100%;}
+.post-grid[data-count="1"] .post-body{padding:44px 48px; justify-content:center; gap:14px;}
+.post-grid[data-count="1"] .post-card h3{font-size:1.7rem;}
+.post-grid[data-count="1"] .post-card p{font-size:0.95rem;}
+.post-grid[data-count="1"] .post-meta{margin-top:6px;}
+.post-card{
+  background:var(--paper); padding:0 0 26px;
+  display:flex; flex-direction:column;
+  text-decoration:none;
+}
+.post-card .thumb{margin-bottom:18px;}
+.post-card .post-body{padding:0 26px; display:flex; flex-direction:column; gap:10px; flex:1;}
+.post-card h3{font-size:1.15rem; line-height:1.15;}
+.post-card p{font-size:0.85rem; opacity:0.72;}
+.post-meta{
+  font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+  opacity:0.6; display:flex; gap:10px; align-items:center; margin-top:auto; padding-top:8px;
+}
+
+/* --------------------------------------------------------------------------
+   ARTICLE
+   -------------------------------------------------------------------------- */
+.post-head{padding:64px 0 0;}
+.breadcrumb{font-family:'IBM Plex Mono', monospace; font-size:0.7rem; opacity:0.6; margin-bottom:20px;}
+.breadcrumb a{text-decoration:none;}
+.breadcrumb a:hover{opacity:1; color:var(--sanctuary);}
+.post-head h1{font-size:clamp(2rem, 4.4vw, 3.3rem); margin:14px 0 20px; max-width:20ch;}
+.post-byline{
+  font-family:'IBM Plex Mono', monospace; font-size:0.74rem;
+  opacity:0.65; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  padding-bottom:36px; border-bottom:1px solid var(--line);
+}
+
+article{max-width:680px; margin:0 auto; padding:0 32px;}
+article h2{
+  font-size:1.62rem; margin:52px 0 16px; line-height:1.12;
+}
+article h3{font-size:1.12rem; margin:32px 0 10px;}
+article p{margin-bottom:18px; font-size:1.03rem; line-height:1.72;}
+article a{color:var(--sanctuary); text-decoration:underline; text-underline-offset:3px;}
+article strong{font-weight:600;}
+article em{font-style:italic;}
+article ol, article ul{margin:0 0 18px 1.15rem;}
+article li{margin-bottom:12px; font-size:1.03rem; line-height:1.7;}
+article ol li::marker{font-family:'Fraunces', serif; color:var(--gold);}
+
+/* Answer-first summary box — the featured-snippet / AI-citation target */
+.quick-answer{
+  background:var(--paper-dim);
+  border-left:2px solid var(--gold);
+  padding:22px 24px; margin:32px 0 40px;
+}
+.quick-answer .eyebrow{display:block; margin-bottom:8px;}
+.quick-answer p{margin:0; font-size:1.05rem; line-height:1.65;}
+
+/* Pull quote */
+.pull{
+  border-left:2px solid var(--gold); padding-left:20px; margin:34px 0;
+  font-family:'Fraunces', serif; font-size:1.28rem; line-height:1.35; font-style:italic;
+  color:var(--sanctuary);
+}
+
+/* Scripture reference block */
+.scripture{
+  border:1px solid var(--line); padding:24px; margin:40px 0;
+  background:rgba(255,255,255,0.35);
+}
+.scripture ul{list-style:none; margin:12px 0 0; padding:0;
+  display:flex; flex-wrap:wrap; gap:8px;}
+.scripture cite{
+  font-style:normal; font-family:'IBM Plex Mono', monospace; font-size:0.74rem;
+  padding:5px 11px; border:1px solid var(--line); border-radius:20px; display:inline-block;
+}
+
+/* FAQ */
+.faq{margin:40px 0;}
+.faq details{border-bottom:1px solid var(--line); padding:16px 0;}
+.faq summary{
+  cursor:pointer; font-family:'Fraunces', serif; font-size:1.05rem;
+  list-style:none; display:flex; justify-content:space-between; gap:16px; align-items:flex-start;
+}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+"; color:var(--gold); font-size:1.3rem; line-height:1; flex:0 0 auto;}
+.faq details[open] summary::after{content:"–";}
+.faq details p{margin:14px 0 2px; font-size:0.97rem; opacity:0.85;}
+
+/* --------------------------------------------------------------------------
+   VIDEO FACADE
+   A raw YouTube iframe costs ~700KB and wrecks LCP. We paint the treated
+   thumbnail and only swap in the real iframe on click.
+   -------------------------------------------------------------------------- */
+.facade{
+  position:relative; width:100%; aspect-ratio:16/9; margin:36px 0 8px;
+  border:0; padding:0; cursor:pointer; display:block; overflow:hidden;
+  background:var(--sanctuary-dark);
+}
+.facade .thumb{position:absolute; inset:0; aspect-ratio:auto;}
+.facade .play{
+  position:absolute; inset:0; z-index:3;
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px;
+}
+.facade .play svg{
+  width:66px; height:66px;
+  filter:drop-shadow(0 2px 14px rgba(0,0,0,0.45));
+  transition:transform .25s ease;
+}
+.facade:hover .play svg{transform:scale(1.08);}
+.facade .play span{
+  font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--paper);
+  background:rgba(0,0,0,0.4); padding:4px 10px;
+}
+.facade iframe{position:absolute; inset:0; width:100%; height:100%; border:0; z-index:4;}
+.video-caption{
+  font-family:'IBM Plex Mono', monospace; font-size:0.72rem; opacity:0.6;
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:8px;
+}
+.video-caption a{color:inherit;}
+
+/* --------------------------------------------------------------------------
+   AI DISCLOSURE — signed note, appears on every post
+   -------------------------------------------------------------------------- */
+.ai-note{
+  background:var(--sanctuary); color:var(--paper);
+  padding:30px 32px; margin:56px 0 0;
+}
+.ai-note .eyebrow{color:rgba(239,234,225,0.75); display:block; margin-bottom:12px;}
+.ai-note h3{font-size:1.2rem; margin-bottom:12px;}
+.ai-note p{font-size:0.92rem; line-height:1.65; opacity:0.9; margin-bottom:12px;}
+.ai-note a{color:var(--paper); text-decoration:underline; text-underline-offset:3px;}
+.ai-note .sig{
+  font-family:'Fraunces', serif; font-style:italic; font-size:1.02rem;
+  opacity:1; margin-top:18px;
+}
+
+/* Subscribe / next episode */
+.cta-band{background:var(--paper-dim); padding:56px 0; margin-top:72px;}
+.cta-band .inner{max-width:680px; margin:0 auto; padding:0 32px;}
+.cta-band h2{font-size:1.7rem; margin-bottom:12px;}
+.cta-band p{font-size:0.98rem; opacity:0.8; margin-bottom:22px; max-width:52ch;}
+.cta-actions{display:flex; gap:12px; flex-wrap:wrap;}
+.next-up{
+  margin-top:34px; padding-top:26px; border-top:1px solid var(--line);
+  font-size:0.92rem; opacity:0.8;
+}
+.next-up .eyebrow{display:block; margin-bottom:8px;}
+
+/* Prev / next post navigation */
+.post-nav{display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); margin-top:2px;}
+.post-nav a{
+  background:var(--paper); padding:26px; text-decoration:none;
+  display:flex; flex-direction:column; gap:6px;
+}
+.post-nav a:hover{background:var(--paper-dim);}
+.post-nav .dir{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; opacity:0.55; letter-spacing:0.1em; text-transform:uppercase;}
+.post-nav h3{font-size:1rem;}
+.post-nav .empty{background:var(--paper); opacity:0.4;}
+
+/* Hub header */
+.hub-head{padding:80px 0 48px;}
+.hub-head h1{font-size:clamp(2.1rem, 4.6vw, 3.4rem); margin:14px 0 20px; max-width:18ch;}
+.hub-head p{font-size:1.06rem; max-width:56ch; opacity:0.82;}
+.hub-actions{display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;}
+
+/* Method page */
+.method-step{border-left:2px solid var(--gold); padding-left:20px; margin-bottom:30px;}
+.method-step h3{font-size:1.05rem; margin-bottom:6px;}
+.method-step p{font-size:0.95rem; opacity:0.8; margin:0;}
+
+@media (max-width:900px){
+  .post-grid, .post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
+  .post-grid[data-count="1"]{grid-template-columns:1fr;}
+}
+@media (max-width:760px){
+  .post-grid,
+  .post-grid[data-count="1"],
+  .post-grid[data-count="2"]{grid-template-columns:1fr;}
+  /* featured row stacks back into a normal card */
+  .post-grid[data-count="1"] .post-card{grid-template-columns:1fr; padding-bottom:26px;}
+  .post-grid[data-count="1"] .post-card .thumb{margin-bottom:18px; height:auto;}
+  .post-grid[data-count="1"] .post-body{padding:0 26px;}
+  .post-grid[data-count="1"] .post-card h3{font-size:1.15rem;}
+  .post-nav{grid-template-columns:1fr;}
+  .nav-links{gap:18px; font-size:0.82rem;}
+  .nav-links a.hide-sm{display:none;}
+  article h2{font-size:1.4rem;}
+  .post-head{padding-top:40px;}
+}

@@ -202,12 +202,51 @@
   .contact-list a{text-decoration:none; border-bottom:1px solid var(--line);}
   footer{padding:32px 0; text-align:center; font-size:0.78rem; opacity:0.55; font-family:'IBM Plex Mono', monospace;}
 
+  /* DEVOTIONAL — blog cards.
+     These rules are duplicated in blog/assets/blog.css so each file stays
+     self-contained. Change the thumbnail treatment in both places. */
+  .post-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+  .post-grid[data-count="1"]{grid-template-columns:1fr;}
+  .post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
+  /* A lone post becomes a horizontal featured row — thumbnail left, text right. */
+  .post-grid[data-count="1"] .post-card{display:grid; grid-template-columns:1fr 1fr; padding:0; align-items:stretch;}
+  .post-grid[data-count="1"] .post-card .thumb{margin-bottom:0; height:100%;}
+  .post-grid[data-count="1"] .post-body{padding:44px 48px; justify-content:center; gap:14px;}
+  .post-grid[data-count="1"] .post-card h3{font-size:1.7rem;}
+  .post-grid[data-count="1"] .post-card p{font-size:0.95rem;}
+  .post-grid[data-count="1"] .post-meta{margin-top:6px;}
+  .post-card{background:var(--paper); padding:0 0 26px; display:flex; flex-direction:column; text-decoration:none;}
+  .post-card .thumb{margin-bottom:18px;}
+  .post-card .post-body{padding:0 26px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .post-card h3{font-size:1.15rem; line-height:1.15;}
+  .post-card p{font-size:0.85rem; opacity:0.72;}
+  .post-meta{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; opacity:0.6;
+    display:flex; gap:10px; align-items:center; margin-top:auto; padding-top:8px;}
+  .thumb{position:relative; overflow:hidden; aspect-ratio:16/9;
+    background:linear-gradient(135deg,#33463B,#22201B);}
+  .thumb img{display:block; width:100%; height:100%; object-fit:cover;
+    filter:grayscale(1) contrast(1.05) brightness(0.95);
+    transition:filter .45s ease, transform .45s ease;}
+  .thumb::after{content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(150deg, rgba(51,70,59,0.72), rgba(185,138,62,0.42));
+    mix-blend-mode:multiply;}
+  .thumb::before{content:""; position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0.18;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");}
+  a:hover .thumb img{filter:grayscale(0.25) contrast(1.02) brightness(1); transform:scale(1.03);}
+
   @media (max-width:900px) and (min-width:761px){
     .skills-cols{grid-template-columns:1fr 1fr;}
+    .post-grid, .post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
+    .post-grid[data-count="1"]{grid-template-columns:1fr;}
   }
   @media (max-width:760px){
     .hero-grid, .about-grid, .contact-wrap, .skills-cols{grid-template-columns:1fr;}
-    .work-grid{grid-template-columns:1fr;}
+    .work-grid, .post-grid,
+    .post-grid[data-count="1"], .post-grid[data-count="2"]{grid-template-columns:1fr;}
+    .post-grid[data-count="1"] .post-card{grid-template-columns:1fr; padding-bottom:26px;}
+    .post-grid[data-count="1"] .post-card .thumb{margin-bottom:18px; height:auto;}
+    .post-grid[data-count="1"] .post-body{padding:0 26px;}
+    .post-grid[data-count="1"] .post-card h3{font-size:1.15rem;}
     .hero-meta{text-align:left; padding-bottom:32px;}
     .nav-links{display:none;}
   }
@@ -222,6 +261,7 @@
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
+      <a href="/blog/">Devotional</a>
       <a href="#contact">Contact</a>
       <a href="#" class="btn">Download resume</a>
     </div>
@@ -335,6 +375,40 @@
     </div>
   </div>
 </section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<!-- BLOG:START -->
+<section id="devotional">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Living Devotional &middot; YouTube</span>
+      <h2>Cinematic Bible stories, made weekly.</h2>
+      <p style="max-width:58ch; opacity:0.82; margin-top:14px;">A personal project where I
+      direct short films out of the parts of Scripture people actually live inside &mdash;
+      waiting, being forgotten, doing the right thing and losing anyway. Every episode gets a
+      written companion, and I document exactly how each one is made.</p>
+      <div style="display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;">
+        <a class="btn" href="/blog/">Read the episodes</a>
+        <a class="btn btn-outline" href="https://www.youtube.com/@living-devotional" target="_blank" rel="noopener">Watch on YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="post-grid" data-count="1">
+      <a class="post-card" href="/blog/why-god-makes-you-wait/">
+        <span class="thumb">
+          <img src="https://i.ytimg.com/vi/_z0c1dm2EZU/maxresdefault.jpg" loading="lazy" width="1280" height="720" alt="Joseph alone in an Egyptian prison cell, lit by a shaft of dawn light through a high window"
+               onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/_z0c1dm2EZU/hqdefault.jpg';">
+        </span>
+        <span class="post-body">
+          <h3>Why God Makes You Wait While Everyone Else Moves On</h3>
+          <p>Joseph waited thirteen years between the dream and the throne. Two of those years came after the one man who could have freed him simply forgot.</p>
+          <span class="post-meta"><time datetime="2026-08-17">August 17, 2026</time><span class="tag">6:38</span></span>
+        </span>
+      </a>
+  </div>
+</section>
+<!-- BLOG:END -->
 
 <section id="skills" class="tight">
   <div class="wrap">
