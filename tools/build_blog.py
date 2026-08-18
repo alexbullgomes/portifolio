@@ -416,12 +416,6 @@ def post_nav_html(newer, older):
     )
 
 
-def grid_open(count, indent=""):
-    """data-count lets the CSS collapse to 1 or 2 columns so a short list never
-    leaves empty cells showing the grid's hairline background."""
-    return '%s<div class="post-grid" data-count="%d">' % (indent, min(count, 3))
-
-
 def card_html(post, indent="    "):
     return (
         '{i}<a class="post-card" href="/blog/{slug}/">\n'
@@ -533,8 +527,7 @@ def render_hub(posts):
         "NAV": nav("blog"),
         "FOOTER": FOOTER,
         "CHANNEL_URL": CHANNEL_URL,
-        "GRID_OPEN": grid_open(len(posts), indent="  "),
-        "POST_CARDS": "\n".join(card_html(p) for p in posts),
+        "POST_CARDS": "\n".join(card_html(p, indent="      ") for p in posts),
     })
 
 
@@ -713,13 +706,12 @@ def homepage_section(posts):
         <a class="btn btn-outline" href="%s" target="_blank" rel="noopener">Watch on YouTube</a>
       </div>
     </div>
-  </div>
+    <div class="post-grid">
 %s
-%s
+    </div>
   </div>
 </section>
-%s""" % (BLOG_MARK_START, CHANNEL_URL,
-         grid_open(min(len(posts), HOMEPAGE_CARDS), indent="  "), cards, BLOG_MARK_END)
+%s""" % (BLOG_MARK_START, CHANNEL_URL, cards, BLOG_MARK_END)
 
 
 def update_index(posts):

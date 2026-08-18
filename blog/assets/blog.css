@@ -102,41 +102,47 @@ footer a{color:inherit;}
 a:hover .thumb img{filter:grayscale(0.25) contrast(1.02) brightness(1); transform:scale(1.03);}
 
 /* --------------------------------------------------------------------------
-   POST GRID (blog hub + homepage section reuse these class names)
+   POST LIST (blog hub + homepage section reuse these class names)
+
+   One fixed-height row per post. The height is fixed rather than derived from
+   aspect-ratio, because aspect-ratio ties thumbnail height to viewport width —
+   on a wide monitor that inflated the still into a full-page banner.
+   409x230 is exactly 16:9, so the thumbnail still shows complete and uncropped.
    -------------------------------------------------------------------------- */
-.post-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
-/* Collapse columns to match the post count — an empty grid cell would otherwise
-   show the container's hairline background as a solid block. */
-.post-grid[data-count="1"]{grid-template-columns:1fr;}
-.post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
-/* A lone post becomes a horizontal featured row — thumbnail left, text right.
-   Full width in a single column would blow the still up to billboard size. */
-.post-grid[data-count="1"] .post-card{
-  display:grid; grid-template-columns:1fr 1fr; padding:0; align-items:stretch;
+.post-grid{
+  display:grid; grid-template-columns:1fr; gap:2px;
+  background:var(--line);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
 }
-.post-grid[data-count="1"] .post-card .thumb{margin-bottom:0; height:100%;}
-.post-grid[data-count="1"] .post-body{padding:44px 48px; justify-content:center; gap:14px;}
-.post-grid[data-count="1"] .post-card h3{font-size:1.7rem;}
-.post-grid[data-count="1"] .post-card p{font-size:0.95rem;}
-.post-grid[data-count="1"] .post-meta{margin-top:6px;}
 .post-card{
-  background:var(--paper); padding:0 0 26px;
-  display:flex; flex-direction:column;
+  display:grid; grid-template-columns:409px 1fr;
+  height:230px; padding:0;
+  background:var(--paper);
   text-decoration:none;
 }
-.post-card .thumb{margin-bottom:18px;}
-.post-card .post-body{padding:0 26px; display:flex; flex-direction:column; gap:10px; flex:1;}
-.post-card h3{font-size:1.15rem; line-height:1.15;}
-.post-card p{font-size:0.85rem; opacity:0.72;}
+.post-card .thumb{aspect-ratio:auto; height:100%; margin-bottom:0;}
+.post-card .post-body{
+  padding:0 40px; display:flex; flex-direction:column;
+  justify-content:center; gap:12px; overflow:hidden;
+}
+.post-card h3{font-size:1.45rem; line-height:1.15;}
+/* clamp + overflow:hidden above guarantee long copy can't break the fixed height */
+.post-card p{
+  font-size:0.9rem; opacity:0.72;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
 .post-meta{
   font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
-  opacity:0.6; display:flex; gap:10px; align-items:center; margin-top:auto; padding-top:8px;
+  opacity:0.6; display:flex; gap:10px; align-items:center; margin-top:4px;
 }
 
 /* --------------------------------------------------------------------------
    ARTICLE
    -------------------------------------------------------------------------- */
-.post-head{padding:64px 0 0;}
+/* keep .wrap's 32px horizontal padding — zeroing it would misalign the blog
+   headings against every section on index.html */
+.post-head{padding:64px 32px 0;}
 .breadcrumb{font-family:'IBM Plex Mono', monospace; font-size:0.7rem; opacity:0.6; margin-bottom:20px;}
 .breadcrumb a{text-decoration:none;}
 .breadcrumb a:hover{opacity:1; color:var(--sanctuary);}
@@ -273,7 +279,7 @@ article ol li::marker{font-family:'Fraunces', serif; color:var(--gold);}
 .post-nav .empty{background:var(--paper); opacity:0.4;}
 
 /* Hub header */
-.hub-head{padding:80px 0 48px;}
+.hub-head{padding:80px 32px 48px;}
 .hub-head h1{font-size:clamp(2.1rem, 4.6vw, 3.4rem); margin:14px 0 20px; max-width:18ch;}
 .hub-head p{font-size:1.06rem; max-width:56ch; opacity:0.82;}
 .hub-actions{display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;}
@@ -284,18 +290,15 @@ article ol li::marker{font-family:'Fraunces', serif; color:var(--gold);}
 .method-step p{font-size:0.95rem; opacity:0.8; margin:0;}
 
 @media (max-width:900px){
-  .post-grid, .post-grid[data-count="2"]{grid-template-columns:repeat(2,1fr);}
-  .post-grid[data-count="1"]{grid-template-columns:1fr;}
+  .post-card .post-body{padding:0 26px;}
+  .post-card h3{font-size:1.25rem;}
 }
 @media (max-width:760px){
-  .post-grid,
-  .post-grid[data-count="1"],
-  .post-grid[data-count="2"]{grid-template-columns:1fr;}
-  /* featured row stacks back into a normal card */
-  .post-grid[data-count="1"] .post-card{grid-template-columns:1fr; padding-bottom:26px;}
-  .post-grid[data-count="1"] .post-card .thumb{margin-bottom:18px; height:auto;}
-  .post-grid[data-count="1"] .post-body{padding:0 26px;}
-  .post-grid[data-count="1"] .post-card h3{font-size:1.15rem;}
+  /* stack, and restore the 16:9 ratio so the whole thumbnail is visible */
+  .post-card{grid-template-columns:1fr; height:auto; padding-bottom:26px;}
+  .post-card .thumb{aspect-ratio:16/9; height:auto; margin-bottom:18px;}
+  .post-card .post-body{padding:0 26px; justify-content:flex-start;}
+  .post-card h3{font-size:1.15rem;}
   .post-nav{grid-template-columns:1fr;}
   .nav-links{gap:18px; font-size:0.82rem;}
   .nav-links a.hide-sm{display:none;}
